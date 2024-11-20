@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>গান প্লেলিস্ট</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+  <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #ff6f61, #1db954);
+            margin: 0;
+            padding: 0;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 500vh;
+        }
+        h1 {
+            color: #1DB954;
+            margin-bottom: 20px;
+            font-size: 36px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 10px #1DB954, 0 0 20px #1DB954, 0 0 30px #1DB954;
+        }
+
+        .search-section {
+            margin-bottom: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .search-section input[type="text"] {
+            padding: 10px;
+            width: 300px;
+            border-radius: 5px;
+            border: 1px solid #333;
+            background-color: #222;
+            color: #fff;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #1DB954;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: white;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #17a74a;
+        }
+
+        /* Fix for ensuring the playlist scrollable only */
+        .playlist-container {
+            max-height: 400px;
+            overflow-y: auto;
+            width: 100%;
+            max-width: 500px;
+        }
+
+        .audio-player {
+            background: linear-gradient(135deg, #1DB954, #191414);
+            padding: 10px;
+            border-radius: 15px;
+            width: 100%;
+            max-width: 500px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+            margin-bottom: 20px;
+        }
+
+        .playlist {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .playlist li {
+            background-color: #282828;
+            margin-bottom: 10px;
+            padding: 10px 15px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 0.7);
+        }
+
+        .playlist li:hover, .playlist li.active {
+            background-color: #1DB954;
+            color: #000;
+            box-shadow: 0 0 20px rgba(0, 255, 0, 1), 0 0 30px rgba(0, 255, 0, 0.8);
+        }
+
+        .playlist li .neon-border {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border: 2px solid #1DB954;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 255, 0, 0.6);
+            animation: neonPulse 1.5s infinite alternate;
+        }
+
+        .song-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .song-thumbnail {
+            width: 40px;
+            height: 40px;
+            background-color: #333;
+            border-radius: 5px;
+        }
+
+        .song-title {
+            flex-grow: 1;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .footer {
+            margin-top: 50px;
+            font-size: 12px;
+            color: #888;
+        }
+
+        .footer a {
+            color: #1DB954;
+            text-decoration: none;
+        }
+
+        @keyframes neonPulse {
+            0% {
+                box-shadow: 0 0 5px rgba(0, 255, 0, 0.5), 0 0 10px rgba(0, 255, 0, 0.7);
+            }
+            100% {
+                box-shadow: 0 0 20px rgba(0, 255, 0, 1), 0 0 40px rgba(0, 255, 0, 0.8);
+            }
+        }
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neon Audio Player with Golden Frame</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #111;
+            margin: 0;
+            flex-direction: column;
+        }
+
+        #audioPlayer {
+            width: 350px;
+            height: 50px;
+            border: none;
+            padding: 5px;
+            background-color: #111;
+            border-radius: 15px;
+            box-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700; /* Neon golden */
+            animation: flicker 1.5s infinite alternate; /* Flicker effect */
+            margin-bottom: 20px;
+            border: 5px solid #FFD700; /* Golden frame */
+        }
+
+        @keyframes flicker {
+            0% {
+                box-shadow: 0 0 30px #FFD700, 0 0 60px #FFD700;
+                opacity: 1;
+            }
+            50% {
+                box-shadow: 0 0 15px #FFD700, 0 0 30px #FFD700;
+                opacity: 0.6;
+            }
+            100% {
+                box-shadow: 0 0 45px #FFD700, 0 0 90px #FFD700;
+                opacity: 1;
+            }
+        }
+
+        /* Music bar container */
+        .music-bars {
+            display: flex;
+            justify-content: space-evenly;
+            width: 350px;
+            height: 50px;
+            display: none; /* Hide bars initially */
+            margin-top: 10px;
+        }
+
+        /* Individual music bars */
+        .bar {
+            width: 5px; /* Reduced width */
+            height: 30px; /* Reduced height */
+            background-color: white;
+            animation: bar-animation 0.2s infinite alternate;
+        }
+
+        .bar:nth-child(odd) {
+            animation-delay: 0.1s;
+        }
+
+        .bar:nth-child(even) {
+            animation-delay: 0.2s;
+        }
+
+        @keyframes bar-animation {
+            0% {
+                height: 20px; /* Reduced minimum height */
+            }
+            100% {
+                height: 45px; /* Increased maximum height */
+            }
+        }
+
+    </style>
+</head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profile with Persistent Image</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #eceff1;
+            margin: 0;
+        }
+
+        .music-container {
+            position: relative;
+            width: 150px;
+            height: 150px;
+        }
+
+        .profile {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 4px solid #ddd;
+            position: relative;
+        }
+
+        .profile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #uploadButton {
+            position: absolute;
+            bottom: -30px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        #uploadButton.hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="music-container">
+        <div class="profile">
+            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+        </div>
+        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
+        <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
+    </div>
+
+    <script>
+        // Load image from local storage if available
+        window.onload = function() {
+            const storedImage = localStorage.getItem('profileImage');
+            if (storedImage) {
+                document.getElementById('profileImage').src = storedImage;
+                document.getElementById('uploadButton').classList.add('hidden'); // Hide the upload button after load
+            }
+        }
+
+        function uploadImage(event) {
+            var reader = new FileReader();
+            reader.onload = function() {
+                var output = document.getElementById('profileImage');
+                output.src = reader.result;
+                localStorage.setItem('profileImage', reader.result); // Save image to local storage
+                document.getElementById('uploadButton').classList.add('hidden'); // Hide the upload button after upload
+            }
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    </script>
+</body>
+</html>
+</body>
+</html>
+    <h1>Pilar vai er playlist</h1>
+    <!-- সার্চ সেকশন -->
+    <div class="search-section">
+        <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
+    </div>
+    <!-- গান আপলোড করার জন্য ফর্ম -->
+    <input type="file" id="fileInput" accept="audio/*" onchange="uploadSong(event)">
+    <div id="status"></div>
+
+    <!-- গানগুলোর তালিকা -->
+    <div class="player-container">
+        <audio id="audioPlayer" src="song.mp3" controls></audio>
+    </div>
+
+</body>
+</html>
+    <div class="playlist-container">
+        <ul id="playlist" class="playlist"></ul>
+    <div class="footer">
+  <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
+    </div>
+
+    <script>
+        let db;
+
+        const request = indexedDB.open("songsDB", 1);
+        request.onsuccess = function(event) {
+            db = event.target.result;
+            loadPlaylist();
+        };
+
+        request.onupgradeneeded = function(event) {
+            db = event.target.result;
+            const objectStore = db.createObjectStore("songs", { keyPath: "id", autoIncrement: true });
+            objectStore.createIndex("songName", "songName", { unique: false });
+        };
+
+        function uploadSong(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const songName = file.name;
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const transaction = db.transaction(["songs"], "readwrite");
+                const objectStore = transaction.objectStore("songs");
+
+                const songData = {
+                    songName: songName,
+                    songFile: reader.result
+                };
+
+                const request = objectStore.add(songData);
+
+                request.onsuccess = function() {
+                    loadPlaylist();
+                    document.getElementById("status").innerText = "গান আপলোড করা হয়েছে!";
+                };
+
+                request.onerror = function() {
+                    document.getElementById("status").innerText = "আপলোডে সমস্যা হয়েছে!";
+                };
+            };
+            reader.readAsDataURL(file);
+        }
+
+        function loadPlaylist() {
+            const objectStore = db.transaction("songs").objectStore("songs");
+            const request = objectStore.getAll();
+            request.onsuccess = function(event) {
+                const playlist = event.target.result;
+                const playlistElement = document.getElementById("playlist");
+                playlistElement.innerHTML = ""; // প্লেলিস্ট পরিষ্কার করুন
+
+                playlist.forEach(song => {
+                    const li = document.createElement("li");
+                    const songTitle = document.createElement("span");
+                    songTitle.innerText = song.songName;
+                    const songInfo = document.createElement("div");
+                    songInfo.classList.add("song-info");
+
+                    const thumbnail = document.createElement("div");
+                    thumbnail.classList.add("song-thumbnail");
+                    songInfo.appendChild(thumbnail);
+                    songInfo.appendChild(songTitle);
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.innerText = "ডিলিট";
+                    deleteButton.classList.add("delete-btn");
+                    deleteButton.onclick = function(event) {
+                        event.stopPropagation(); // prevent li click event
+                        deleteSong(song.id);
+                    };
+
+                    li.appendChild(songInfo);
+                    li.appendChild(deleteButton);
+                    li.onclick = function() { playSongFromList(song.songFile); };
+                    playlistElement.appendChild(li);
+                });
+            };
+        }
+
+        function searchSongs() {
+            const searchValue = document.getElementById("search").value.toLowerCase();
+            const playlistItems = document.querySelectorAll(".playlist li");
+
+            playlistItems.forEach(item => {
+                const songTitle = item.querySelector(".song-title").innerText.toLowerCase();
+                if (songTitle.includes(searchValue)) {
+                    item.style.display = "flex";
+                } else {
+                    item.style.display = "none";
+                }
+            });
+        }
+
+        function deleteSong(songId) {
+            const transaction = db.transaction(["songs"], "readwrite");
+            const objectStore = transaction.objectStore("songs");
+
+            const request = objectStore.delete(songId);
+            request.onsuccess = function() {
+                loadPlaylist(); // তালিকা পুনরায় লোড করুন
+                document.getElementById("status").innerText = "গানটি মুছে ফেলা হয়েছে!";
+            };
+
+            request.onerror = function() {
+                document.getElementById("status").innerText = "ডিলিট করতে সমস্যা হয়েছে!";
+            };
+        }
+
+        function playSongFromList(songFile) {
+            const audioPlayer = document.getElementById("audioPlayer");
+            audioPlayer.src = songFile;
+            audioPlayer.play();
+        }
+    </script>
+</body>
+</html>

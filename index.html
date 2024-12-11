@@ -13,14 +13,50 @@
             color: white;
         }
 
-        /* Header Style */
-        h1 {
+        /* Header Section */
+        .header {
             text-align: center;
+            padding: 20px;
             margin-top: 20px;
-            font-size: 36px;
+        }
+
+        .profile-picture-container {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto;
+            background-color: #444;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .profile-picture {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        #uploadButton {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        #uploadButton:hover {
+            background-color: #45a049;
         }
 
         /* Playlist Section */
+        h1 {
+            font-size: 36px;
+        }
+
         .search-section {
             display: flex;
             justify-content: center;
@@ -48,7 +84,6 @@
             margin-top: 40px;
         }
 
-        /* Playlist Styles */
         .playlist-container {
             display: flex;
             flex-wrap: wrap;
@@ -94,6 +129,16 @@
             font-size: 18px;
         }
 
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .footer a {
+            color: #fff;
+            text-decoration: none;
+        }
+
         /* Music Player */
         .audio-player {
             background-color: #222;
@@ -110,42 +155,19 @@
             width: 100%;
             border-radius: 5px;
         }
-
-        .footer {
-            text-align: center;
-            margin-top: 30px;
-        }
-
-        .footer a {
-            color: #fff;
-            text-decoration: none;
-        }
-
-        /* Button Style */
-        #uploadButton {
-            position: relative;
-            bottom: -40px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 16px;
-            transition: background-color 0.3s;
-        }
-
-        #uploadButton:hover {
-            background-color: #45a049;
-        }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
-    <h1>Pilar vai er Playlist</h1>
+    <!-- Header Section -->
+    <div class="header">
+        <div class="profile-picture-container">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture" id="profilePicture" class="profile-picture">
+        </div>
+        <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Profile Picture</button>
+        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadProfilePicture(event)">
+        <h1>Pilar vai er Playlist</h1>
+    </div>
 
     <!-- Search Section -->
     <div class="search-section">
@@ -170,10 +192,6 @@
         <p>Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
     </div>
 
-    <!-- Upload Button -->
-    <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Song</button>
-    <input type="file" id="fileInput" style="display: none;" accept="audio/*" onchange="uploadSong(event)">
-
     <script>
         let db;
 
@@ -188,6 +206,18 @@
             const objectStore = db.createObjectStore("songs", { keyPath: "id", autoIncrement: true });
             objectStore.createIndex("songName", "songName", { unique: false });
         };
+
+        function uploadProfilePicture(event) {
+            const file = event.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function() {
+                const profilePicture = document.getElementById("profilePicture");
+                profilePicture.src = reader.result;
+            };
+            reader.readAsDataURL(file);
+        }
 
         function uploadSong(event) {
             const file = event.target.files[0];

@@ -84,15 +84,18 @@
     </div>
 
     <script>
+        // Adding an event listener for the form submission
         document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
+            event.preventDefault();  // Prevent default form submission behavior
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
+            // Checking if the entered username and password match the predefined ones
             if (username === 'Eiamin777' && password === '12345678mp3') {
-                alert('Login Successful!');
+                alert('Login Successful!');  // If match, show success message
             } else {
-                alert('Incorrect username or password.');
+                alert('Incorrect username or password.');  // If not, show error message
             }
         });
     </script>

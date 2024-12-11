@@ -12,6 +12,14 @@
             background-color: #f4f4f4;
         }
 
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+        }
+
         .container {
             width: 100%;
             max-width: 500px;
@@ -53,16 +61,15 @@
             text-align: center;
         }
 
-        .forgot-password {
-            text-align: center;
-            margin-top: 10px;
-        }
     </style>
 </head>
 <body>
 
+    <header>
+        Sign Up / Login
+    </header>
+
     <div class="container">
-        <!-- Sign Up Form -->
         <div id="signup-form">
             <h2>Sign Up</h2>
             <form>
@@ -76,7 +83,6 @@
             </div>
         </div>
 
-        <!-- Login Form -->
         <div id="login-form" style="display: none;">
             <h2>Login</h2>
             <form>
@@ -84,23 +90,8 @@
                 <input type="password" id="login-password" placeholder="Password" required>
                 <button type="submit">Login</button>
             </form>
-            <div class="forgot-password">
-                <a href="javascript:void(0);" onclick="forgotPassword()">Forgot Password?</a>
-            </div>
             <div class="form-switch">
                 <p>Don't have an account? <a href="javascript:void(0);" onclick="switchForm('signup')">Sign Up</a></p>
-            </div>
-        </div>
-
-        <!-- Forgot Password Form -->
-        <div id="forgot-password-form" style="display: none;">
-            <h2>Forgot Password</h2>
-            <form>
-                <input type="email" id="forgot-email" placeholder="Enter your email" required>
-                <button type="submit">Reset Password</button>
-            </form>
-            <div class="form-switch">
-                <p>Remembered your password? <a href="javascript:void(0);" onclick="switchForm('login')">Login</a></p>
             </div>
         </div>
     </div>
@@ -110,17 +101,10 @@
             if (formType === 'signup') {
                 document.getElementById('signup-form').style.display = 'block';
                 document.getElementById('login-form').style.display = 'none';
-                document.getElementById('forgot-password-form').style.display = 'none';
-            } else if (formType === 'login') {
+            } else {
                 document.getElementById('signup-form').style.display = 'none';
                 document.getElementById('login-form').style.display = 'block';
-                document.getElementById('forgot-password-form').style.display = 'none';
             }
-        }
-
-        function forgotPassword() {
-            document.getElementById('forgot-password-form').style.display = 'block';
-            document.getElementById('login-form').style.display = 'none';
         }
     </script>
 </body>

@@ -1,51 +1,92 @@
-<!-- সাইনআপ/লগইন ফর্ম -->
-<div id="login-signup-form" style="text-align: center; padding: 20px; border: 1px solid #ccc; border-radius: 5px; max-width: 400px; margin: auto;">
-  <h2>লগইন / সাইনআপ</h2>
-  
-  <!-- লগইন ফর্ম -->
-  <div id="login-form">
-    <h3>লগইন করুন</h3>
-    <form action="login-action.php" method="post">
-      <label for="login-email">ইমেইল:</label><br>
-      <input type="email" id="login-email" name="email" required><br><br>
-      <label for="login-password">পাসওয়ার্ড:</label><br>
-      <input type="password" id="login-password" name="password" required><br><br>
-      <input type="submit" value="লগইন">
-    </form>
-    <p>নতুন ব্যবহারকারী? <a href="javascript:void(0);" onclick="toggleForm();">সাইনআপ করুন</a></p>
-  </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up / Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .form-container {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            width: 300px;
+        }
+        .form-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .form-container input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+        .form-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: white;
+            font-size: 16px;
+        }
+        .form-container a {
+            text-align: center;
+            display: block;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Sign Up Form -->
+    <div class="form-container">
+        <h2>Sign Up</h2>
+        <form action="/submit-signup" method="POST">
+            <input type="text" name="username" placeholder="Enter Username" required>
+            <input type="email" name="email" placeholder="Enter Email" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Sign Up</button>
+        </form>
+        <a href="#login-form">Already have an account? Log in</a>
+    </div>
 
-  <!-- সাইনআপ ফর্ম -->
-  <div id="signup-form" style="display: none;">
-    <h3>সাইনআপ করুন</h3>
-    <form action="signup-action.php" method="post">
-      <label for="signup-name">নাম:</label><br>
-      <input type="text" id="signup-name" name="name" required><br><br>
-      <label for="signup-email">ইমেইল:</label><br>
-      <input type="email" id="signup-email" name="email" required><br><br>
-      <label for="signup-password">পাসওয়ার্ড:</label><br>
-      <input type="password" id="signup-password" name="password" required><br><br>
-      <input type="submit" value="সাইনআপ">
-    </form>
-    <p>পূর্বে একাউন্ট আছে? <a href="javascript:void(0);" onclick="toggleForm();">লগইন করুন</a></p>
-  </div>
-</div>
+    <!-- Login Form (Hidden by Default) -->
+    <div id="login-form" class="form-container" style="display:none;">
+        <h2>Login</h2>
+        <form action="/submit-login" method="POST">
+            <input type="email" name="email" placeholder="Enter Email" required>
+            <input type="password" name="password" placeholder="Enter Password" required>
+            <button type="submit">Login</button>
+        </form>
+        <a href="#sign-up-form">Don't have an account? Sign up</a>
+    </div>
 
-<script>
-  // ফর্ম পাল্টানোর ফাংশন
-  function toggleForm() {
-    var loginForm = document.getElementById('login-form');
-    var signupForm = document.getElementById('signup-form');
-    
-    if (loginForm.style.display === 'none') {
-      loginForm.style.display = 'block';
-      signupForm.style.display = 'none';
-    } else {
-      loginForm.style.display = 'none';
-      signupForm.style.display = 'block';
-    }
-  }
-</script>
+    <script>
+        // Toggle between Sign Up and Login forms
+        document.querySelector('a[href="#login-form"]').addEventListener('click', function() {
+            document.querySelector('.form-container').style.display = 'none';
+            document.querySelector('#login-form').style.display = 'block';
+        });
+
+        document.querySelector('a[href="#sign-up-form"]').addEventListener('click', function() {
+            document.querySelector('#login-form').style.display = 'none';
+            document.querySelector('.form-container').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head> 

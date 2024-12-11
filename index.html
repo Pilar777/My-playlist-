@@ -18,6 +18,7 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
         }
 
         .container {
@@ -67,11 +68,35 @@
         .form-switch a:hover {
             text-decoration: underline;
         }
+
+        .songs-list {
+            display: none;
+            width: 100%;
+            max-width: 600px;
+            margin-top: 30px;
+        }
+
+        .songs-list ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .songs-list li {
+            padding: 10px;
+            background-color: #f9f9f9;
+            margin-bottom: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .songs-list li:hover {
+            background-color: #e0e0e0;
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
+    <div class="container" id="login-container">
         <h2>Login</h2>
         <form id="loginForm" onsubmit="return loginUser()">
             <input type="text" id="username" placeholder="Username" required>
@@ -83,14 +108,25 @@
         </div>
     </div>
 
+    <div class="songs-list" id="songs-list">
+        <h2>Available Songs</h2>
+        <ul>
+            <li>Song 1 - "Song Title 1"</li>
+            <li>Song 2 - "Song Title 2"</li>
+            <li>Song 3 - "Song Title 3"</li>
+            <li>Song 4 - "Song Title 4"</li>
+        </ul>
+    </div>
+
     <script>
         function loginUser() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            if (username = 'Eiamin777' & password = '12345678mp3') {
+            if (username === 'Eiamin777' && password === '12345678mp3') {
                 alert('Login Successful!');
-                window.location.href = 'https://www.example.com'; // Replace with your target page URL
+                document.getElementById('login-container').style.display = 'none'; // Hide login form
+                document.getElementById('songs-list').style.display = 'block'; // Show songs list
                 return false; // Prevent form submission
             } else {
                 alert('Incorrect username or password.');
@@ -98,6 +134,7 @@
             }
         }
     </script>
+
 </body>
 </html>
 <!DOCTYPE html>

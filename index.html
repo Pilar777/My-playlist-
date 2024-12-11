@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,20 +12,25 @@
             height: 100vh;
             background-color: #eceff1;
             margin: 0;
+            font-family: Arial, sans-serif;
         }
 
-        .music-container {
-            position: relative;
-            width: 150px;
-            height: 150px;
+        .container {
+            width: 300px;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
         }
 
         .profile {
-            width: 100%;
-            height: 100%;
+            width: 100px;
+            height: 100px;
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid #ddd;
+            margin-bottom: 10px;
             position: relative;
         }
 
@@ -36,41 +40,107 @@
             object-fit: cover;
         }
 
-        #uploadButton {
-            position: absolute;
-            bottom: -30px;
-            left: 50%;
-            transform: translateX(-50%);
-            padding: 5px 10px;
+        .btn {
             background-color: #4CAF50;
             color: white;
             border: none;
-            border-radius: 5px;
+            padding: 10px;
             cursor: pointer;
-            display: inline-block;
+            border-radius: 5px;
+            width: 100%;
+            margin-top: 10px;
         }
 
-        #uploadButton.hidden {
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .hidden {
             display: none;
+        }
+
+        h2 {
+            margin-bottom: 20px;
         }
     </style>
 </head>
 <body>
-    <div class="music-container">
-        <div class="profile">
-            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+    <div class="container">
+        <h2>Login</h2>
+        <input type="email" id="email" class="input-field" placeholder="Enter your email" required>
+        <button class="btn" onclick="login()">Login</button>
+
+        <div class="music-container hidden" id="musicContainer">
+            <div class="profile">
+                <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+            </div>
+            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
+            <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
+            <div class="playlist-container">
+                <ul id="playlist" class="playlist"></ul>
+            </div>
+            <h1>Pilar vai er playlist</h1>
+            <div class="search-section">
+                <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
+            </div>
+            <input type="file" id="songInput" accept="audio/*" onchange="uploadSong(event)">
+            <div id="status"></div>
+            <div class="footer">
+                <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
+            </div>
         </div>
-        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
-        <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
     </div>
 
     <script>
-        // Load image from local storage if available
+        // Login functionality
+        function login() {
+            const email = document.getElementById('email').value;
+            if (email) {
+                localStorage.setItem('userEmail', email);
+                document.querySelector('.container').innerHTML = `
+                    <h2>Welcome, ${email}</h2>
+                    <button class="btn" onclick="logout()">Logout</button>
+                    <div class="music-container">
+                        <div class="profile">
+                            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
+                        </div>
+                        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
+                        <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
+                        <div class="playlist-container">
+                            <ul id="playlist" class="playlist"></ul>
+                        </div>
+                        <h1>Pilar vai er playlist</h1>
+                        <div class="search-section">
+                            <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
+                        </div>
+                        <input type="file" id="songInput" accept="audio/*" onchange="uploadSong(event)">
+                        <div id="status"></div>
+                        <div class="footer">
+                            <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
+                        </div>
+                    </div>
+                `;
+                loadPlaylist();
+            } else {
+                alert('Please enter a valid email.');
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('userEmail');
+            window.location.reload();
+        }
+
+        // Upload and display image from local storage
         window.onload = function() {
             const storedImage = localStorage.getItem('profileImage');
             if (storedImage) {
                 document.getElementById('profileImage').src = storedImage;
-                document.getElementById('uploadButton').classList.add('hidden'); // Hide the upload button after load
+                document.getElementById('uploadButton').classList.add('hidden');
             }
         }
 
@@ -79,41 +149,14 @@
             reader.onload = function() {
                 var output = document.getElementById('profileImage');
                 output.src = reader.result;
-                localStorage.setItem('profileImage', reader.result); // Save image to local storage
-                document.getElementById('uploadButton').classList.add('hidden'); // Hide the upload button after upload
+                localStorage.setItem('profileImage', reader.result);
+                document.getElementById('uploadButton').classList.add('hidden');
             }
             reader.readAsDataURL(event.target.files[0]);
         }
-    </script>
-</body>
-</html>
-</body>
-</html>
-    <h1>Pilar vai er playlist</h1>
-    <!-- সার্চ সেকশন -->
-    <div class="search-section">
-        <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
-    </div>
-    <!-- গান আপলোড করার জন্য ফর্ম -->
-    <input type="file" id="fileInput" accept="audio/*" onchange="uploadSong(event)">
-    <div id="status"></div>
 
-    <!-- গানগুলোর তালিকা -->
-    <div class="player-container">
-        <audio id="audioPlayer" src="song.mp3" controls></audio>
-    </div>
-
-</body>
-</html>
-    <div class="playlist-container">
-        <ul id="playlist" class="playlist"></ul>
-    <div class="footer">
-  <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
-    </div>
-
-    <script>
+        // IndexedDB code for playlist functionality
         let db;
-
         const request = indexedDB.open("songsDB", 1);
         request.onsuccess = function(event) {
             db = event.target.result;
@@ -132,7 +175,6 @@
 
             const songName = file.name;
             const reader = new FileReader();
-
             reader.onload = function() {
                 const transaction = db.transaction(["songs"], "readwrite");
                 const objectStore = transaction.objectStore("songs");
@@ -143,7 +185,6 @@
                 };
 
                 const request = objectStore.add(songData);
-
                 request.onsuccess = function() {
                     loadPlaylist();
                     document.getElementById("status").innerText = "গান আপলোড করা হয়েছে!";
@@ -162,7 +203,7 @@
             request.onsuccess = function(event) {
                 const playlist = event.target.result;
                 const playlistElement = document.getElementById("playlist");
-                playlistElement.innerHTML = ""; // প্লেলিস্ট পরিষ্কার করুন
+                playlistElement.innerHTML = "";
 
                 playlist.forEach(song => {
                     const li = document.createElement("li");
@@ -180,7 +221,7 @@
                     deleteButton.innerText = "ডিলিট";
                     deleteButton.classList.add("delete-btn");
                     deleteButton.onclick = function(event) {
-                        event.stopPropagation(); // prevent li click event
+                        event.stopPropagation();
                         deleteSong(song.id);
                     };
 
@@ -212,7 +253,7 @@
 
             const request = objectStore.delete(songId);
             request.onsuccess = function() {
-                loadPlaylist(); // তালিকা পুনরায় লোড করুন
+                loadPlaylist();
                 document.getElementById("status").innerText = "গানটি মুছে ফেলা হয়েছে!";
             };
 

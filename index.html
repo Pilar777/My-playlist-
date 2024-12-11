@@ -73,7 +73,7 @@
 
     <div class="container">
         <h2>Login</h2>
-        <form id="loginForm">
+        <form id="loginForm" onsubmit="return loginUser()">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
             <button type="submit">Login</button>
@@ -84,20 +84,18 @@
     </div>
 
     <script>
-        // Adding an event listener for the form submission
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();  // Prevent default form submission behavior
-
+        function loginUser() {
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
-            // Checking if the entered username and password match the predefined ones
             if (username === 'Eiamin777' && password === '12345678mp3') {
-                alert('Login Successful!');  // If match, show success message
+                alert('Login Successful!');
+                return false; // Prevent form submission
             } else {
-                alert('Incorrect username or password.');  // If not, show error message
+                alert('Incorrect username or password.');
+                return false; // Prevent form submission
             }
-        });
+        }
     </script>
 </body>
 </html>

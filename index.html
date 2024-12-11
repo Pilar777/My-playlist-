@@ -27,7 +27,6 @@
             background-color: #fff;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
         }
 
         h2 {
@@ -74,31 +73,29 @@
 
     <div class="container">
         <h2>Login</h2>
-        <form onsubmit="return checkLogin(event)">
+        <form id="loginForm">
             <input type="text" id="username" placeholder="Username" required>
             <input type="password" id="password" placeholder="Password" required>
             <button type="submit">Login</button>
         </form>
         <div class="form-switch">
-            <p>Don't have an account? <a href="javascript:void(0);">Sign Up</a></p>
+            <p>Use this account: <strong>Eiamin777</strong> / <strong>12345678mp3</strong></p>
         </div>
     </div>
 
     <script>
-        function checkLogin(event) {
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
             event.preventDefault();
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
 
-            const username = document.getElementById("username").value;
-            const password = document.getElementById("password").value;
-
-            if (username === "Eiamin777" && password === "12345678mp3") {
-                alert("Login Successful!");
+            if (username === 'Eiamin777' && password === '12345678mp3') {
+                alert('Login Successful!');
             } else {
-                alert("Invalid Username or Password");
+                alert('Incorrect username or password.');
             }
-        }
+        });
     </script>
-
 </body>
 </html>
 <!DOCTYPE html>

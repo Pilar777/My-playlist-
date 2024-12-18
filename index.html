@@ -3,343 +3,99 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Profile with Playlist</title>
+    <title>Pilar Vai er Playlist</title>
     <style>
         body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212;
+            color: white;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #1a1a1a;
+            padding: 20px;
+        }
+        header h1 {
+            margin: 0;
+            font-size: 36px;
+            color: #1db954;
+        }
+        .profile-img {
+            border-radius: 50%;
+            width: 180px;
+            height: 180px;
+            border: 5px solid #1db954;
+            margin-top: 20px;
+        }
+        .spongebob-gif {
+            width: 200px;
+            height: auto;
+            margin-top: 20px;
+        }
+        .playlist-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 30px;
+        }
+        .playlist-box {
+            background-color: #1a1a1a;
+            border: 2px solid #333;
+            width: 200px;
+            height: 200px;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 100vh;
-            background-color: #121212;
-            margin: 0;
-            font-family: Arial, sans-serif;
-            color: white;
-        }
-
-        .container {
-            width: 350px;
-            background-color: #1e1e1e;
-            padding: 20px;
+            cursor: pointer;
             border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
-            text-align: center;
+            transition: transform 0.3s, background-color 0.3s;
         }
-
-        .profile {
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid #555;
-            margin-bottom: 20px;
-            position: relative;
-            margin-top: 20px;
-        }
-
-        .profile img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .btn {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            border-radius: 5px;
-            width: 100%;
-            margin-top: 10px;
-        }
-
-        .input-field {
-            width: 100%;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 5px;
-            border: 1px solid #555;
+        .playlist-box:hover {
+            transform: scale(1.1);
             background-color: #333;
-            color: white;
         }
-
-        .hidden {
-            display: none;
-        }
-
-        h2 {
-            margin-bottom: 20px;
-        }
-
-        .playlist-container {
-            margin-top: 20px;
-            max-height: 300px;
-            overflow-y: auto;
-        }
-
-        .playlist ul {
-            list-style-type: none;
-            padding: 0;
+        .playlist-box h3 {
             margin: 0;
+            font-size: 20px;
+            color: #1db954;
         }
-
-        .playlist li {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+        footer {
+            background-color: #1a1a1a;
             padding: 10px;
-            border-bottom: 1px solid #555;
-            cursor: pointer;
-            transition: background-color 0.3s;
-        }
-
-        .playlist li:hover {
-            background-color: #333;
-        }
-
-        .play-btn, .delete-btn {
-            background-color: #f44336;
-            color: white;
-            border: none;
-            padding: 8px;
-            cursor: pointer;
-            border-radius: 50%;
-            margin-left: 10px;
-        }
-
-        .play-btn {
-            background-color: #4CAF50;
-        }
-
-        .footer {
-            margin-top: 20px;
-            font-size: 12px;
-        }
-
-        .search-section {
-            margin-top: 15px;
-            margin-bottom: 20px;
-        }
-
-        input[type="file"] {
-            margin-top: 10px;
-        }
-
-        audio {
+            position: fixed;
+            bottom: 0;
             width: 100%;
-            margin-top: 20px;
+            color: white;
+            font-size: 14px;
+            text-align: center;
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login</h2>
-        <input type="email" id="email" class="input-field" placeholder="Enter your email" required>
-        <button class="btn" onclick="login()">Login</button>
+    <header>
+        <h1>Pilar Vai er Playlist</h1>
+        <img class="profile-img" src="https://i.imgur.com/noA0DBe.png" alt="Profile Image">
+        <!-- Add SpongeBob GIF here -->
+        <img class="spongebob-gif" src="https://media.giphy.com/media/Yr0zwEo1lIE6Y/giphy.gif" alt="SpongeBob Music GIF">
+    </header>
 
-        <div class="music-container hidden" id="musicContainer">
-            <div class="profile">
-                <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
-            </div>
-            <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
-            <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
-            <div class="playlist-container">
-                <ul id="playlist" class="playlist"></ul>
-            </div>
-            <h1>Pilar vai er playlist</h1>
-            <div class="search-section">
-                <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
-            </div>
-            <input type="file" id="songInput" accept="audio/*" onchange="uploadSong(event)">
-            <div id="status"></div>
-            <div class="footer">
-                <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
-            </div>
-            <audio id="audioPlayer" controls></audio>
+    <div class="playlist-container">
+        <div class="playlist-box" onclick="window.location.href='bangla-songs.html'">
+            <h3>Bangla Songs</h3>
+        </div>
+        <div class="playlist-box" onclick="window.location.href='hindi-songs.html'">
+            <h3>Hindi Songs</h3>
+        </div>
+        <div class="playlist-box" onclick="window.location.href='other-songs.html'">
+            <h3>Other Songs</h3>
         </div>
     </div>
 
-    <script>
-        // Login functionality
-        function login() {
-            const email = document.getElementById('email').value;
-            if (email) {
-                localStorage.setItem('userEmail', email);
-                document.querySelector('.container').innerHTML = `
-                    <h2>Welcome, ${email}</h2>
-                    <button class="btn" onclick="logout()">Logout</button>
-                    <div class="music-container">
-                        <div class="profile">
-                            <img id="profileImage" src="https://via.placeholder.com/150" alt="Profile Picture">
-                        </div>
-                        <input type="file" id="fileInput" style="display: none;" accept="image/*" onchange="uploadImage(event)">
-                        <button id="uploadButton" onclick="document.getElementById('fileInput').click();">Upload Image</button>
-                        <div class="playlist-container">
-                            <ul id="playlist" class="playlist"></ul>
-                        </div>
-                        <h1>Pilar vai er playlist</h1>
-                        <div class="search-section">
-                            <input type="text" id="search" placeholder="গান খোঁজুন..." onkeyup="searchSongs()">
-                        </div>
-                        <input type="file" id="songInput" accept="audio/*" onchange="uploadSong(event)">
-                        <div id="status"></div>
-                        <div class="footer">
-                            <p style="color: blue;">Created by: <a href="#" style="color: white;">Md. Yamin Islam</a></p>
-                        </div>
-                        <audio id="audioPlayer" controls></audio>
-                    </div>
-                `;
-                loadPlaylist();
-            } else {
-                alert('Please enter a valid email.');
-            }
-        }
-
-        function logout() {
-            localStorage.removeItem('userEmail');
-            window.location.reload();
-        }
-
-        // Upload and display image from local storage
-        window.onload = function() {
-            const storedImage = localStorage.getItem('profileImage');
-            if (storedImage) {
-                document.getElementById('profileImage').src = storedImage;
-                document.getElementById('uploadButton').classList.add('hidden');
-            }
-        }
-
-        function uploadImage(event) {
-            var reader = new FileReader();
-            reader.onload = function() {
-                var output = document.getElementById('profileImage');
-                output.src = reader.result;
-                localStorage.setItem('profileImage', reader.result);
-                document.getElementById('uploadButton').classList.add('hidden');
-            }
-            reader.readAsDataURL(event.target.files[0]);
-        }
-
-        // IndexedDB code for playlist functionality
-        let db;
-        const request = indexedDB.open("songsDB", 1);
-        request.onsuccess = function(event) {
-            db = event.target.result;
-            loadPlaylist();
-        };
-
-        request.onupgradeneeded = function(event) {
-            db = event.target.result;
-            const objectStore = db.createObjectStore("songs", { keyPath: "id", autoIncrement: true });
-            objectStore.createIndex("songName", "songName", { unique: false });
-        };
-
-        function uploadSong(event) {
-            const file = event.target.files[0];
-            if (!file) return;
-
-            const songName = file.name;
-            const reader = new FileReader();
-            reader.onload = function() {
-                const transaction = db.transaction(["songs"], "readwrite");
-                const objectStore = transaction.objectStore("songs");
-
-                const songData = {
-                    songName: songName,
-                    songFile: reader.result
-                };
-
-                const request = objectStore.add(songData);
-                request.onsuccess = function() {
-                    loadPlaylist();
-                    document.getElementById("status").innerText = "গান আপলোড করা হয়েছে!";
-                };
-
-                request.onerror = function() {
-                    document.getElementById("status").innerText = "আপলোডে সমস্যা হয়েছে!";
-                };
-            };
-            reader.readAsDataURL(file);
-        }
-
-        function loadPlaylist() {
-            const objectStore = db.transaction("songs").objectStore("songs");
-            const request = objectStore.getAll();
-            request.onsuccess = function(event) {
-                const playlist = event.target.result;
-                const playlistElement = document.getElementById("playlist");
-                playlistElement.innerHTML = "";
-
-                playlist.forEach(song => {
-                    const li = document.createElement("li");
-                    const songTitle = document.createElement("span");
-                    songTitle.innerText = song.songName;
-                    const songInfo = document.createElement("div");
-                    songInfo.classList.add("song-info");
-
-                    const thumbnail = document.createElement("div");
-                    thumbnail.classList.add("song-thumbnail");
-                    songInfo.appendChild(thumbnail);
-                    songInfo.appendChild(songTitle);
-
-                    const playButton = document.createElement("button");
-                    playButton.innerText = "Play";
-                    playButton.classList.add("play-btn");
-                    playButton.onclick = function(event) {
-                        event.stopPropagation();
-                        playSongFromList(song.songFile);
-                    };
-
-                    const deleteButton = document.createElement("button");
-                    deleteButton.innerText = "Delete";
-                    deleteButton.classList.add("delete-btn");
-                    deleteButton.onclick = function(event) {
-                        event.stopPropagation();
-                        deleteSong(song.id);
-                    };
-
-                    li.appendChild(songInfo);
-                    li.appendChild(playButton);
-                    li.appendChild(deleteButton);
-                    playlistElement.appendChild(li);
-                });
-            };
-        }
-
-        function searchSongs() {
-            const searchValue = document.getElementById("search").value.toLowerCase();
-            const playlistItems = document.querySelectorAll(".playlist li");
-
-            playlistItems.forEach(item => {
-                const songTitle = item.querySelector(".song-info span").innerText.toLowerCase();
-                if (songTitle.includes(searchValue)) {
-                    item.style.display = "flex";
-                } else {
-                    item.style.display = "none";
-                }
-            });
-        }
-
-        function deleteSong(songId) {
-            const transaction = db.transaction(["songs"], "readwrite");
-            const objectStore = transaction.objectStore("songs");
-
-            const request = objectStore.delete(songId);
-            request.onsuccess = function() {
-                loadPlaylist();
-                document.getElementById("status").innerText = "গানটি মুছে ফেলা হয়েছে!";
-            };
-
-            request.onerror = function() {
-                document.getElementById("status").innerText = "ডিলিট করতে সমস্যা হয়েছে!";
-            };
-        }
-
-        function playSongFromList(songFile) {
-            const audioPlayer = document.getElementById("audioPlayer");
-            audioPlayer.src = songFile;
-            audioPlayer.play();
-        }
-    </script>
+    <footer>
+        Created by: Md. Eiamin Islam
+    </footer>
 </body>
 </html>
